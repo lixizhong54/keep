@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--(1)bean 表示要创建的对象. Account account = new Account()-->
+    <!--<bean id="account" class="com.itheima.domain.Account"></bean>-->
+
+    <!--(2)工厂的静态方法创建对象-->
+    <!--class 指定工厂类; 一旦指定了factory-method,此class就不会new-->
+    <!--factory-method指定工厂方法-->
+    <!--<bean id="account2" class="com.itheima.factory.AccountFactory"-->
+          <!--factory-method="getAccountByStatic"></bean>-->
+
+
+    <!--(3)工厂的非静态方法创建对象-->
+    <!--注意: a.先创建一个工厂对象-->
+    <!--<bean id="accountFactory" class="com.itheima.factory.AccountFactory"></bean>-->
+    <!--&lt;!&ndash;b.再通过factory-bean 引用上面的工厂的id,factory-method工厂的非静态方法&ndash;&gt;-->
+
+    <!--<bean id="account3" factory-bean="accountFactory" factory-method="getAccount"></bean>-->
+
+    <!--对象创建的细节-->
+    <!--scope指定对象是单例还是多例
+           singleton默认值,单例
+              prototype 多例
+                request 在web项目有效,范围与HttpServletRequest一致.
+                  session 在web项目有效,范围与HttpSession一致
+                    global session 全局session,在分布式应用有效;如果项目不是分布式项目,范围与session一样的
+                       lazy-init 延迟初始化,只对单例对象有效,表示再第一次的时候对象时候,才创建对象
+                         init-method在创建对象之后执行
+                            destroy-method在销毁容器之前执行;(对象是多例不会执行销毁的方法的)-->
+    <bean id="account" class="com.itheima.domain.Account" scope="singleton" lazy-init="true" init-method="init_" destroy-method="destroy_"></bean>
+</beans>
